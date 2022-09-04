@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize/types";
+import { DataTypes, Deferrable } from "sequelize";
 import db from "../db";
 import { CategoryModel } from "./CategoryModels";
 
@@ -16,6 +16,7 @@ export const ProductModel = db.define('Produtos',
     references: {
       model: CategoryModel,
       key: 'id',
+      deferrable: new Deferrable.INITIALLY_IMMEDIATE
     }
   },
     codigo :{
