@@ -10,15 +10,6 @@ export const ProductModel = db.define('Produtos',
     allowNull: false,
     primaryKey: true,
   },
-  idCategoria:{
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: CategoryModel,
-      key: 'id',
-      deferrable: new Deferrable.INITIALLY_IMMEDIATE
-    }
-  },
     codigo :{
       type: DataTypes.STRING,
       allowNull: false,
@@ -40,3 +31,15 @@ export const ProductModel = db.define('Produtos',
       defaultValue: true
     },
 });
+ProductModel.belongsTo(CategoryModel,{
+    constraints: true,
+    foreignKey: "idCategoria",
+    targetKey: "id"
+});
+
+CategoryModel.hasMany( ProductModel,{
+    foreignKey: "idCategoria",
+    onDelete: "set null",
+    onUpdate: 'cascade',
+    hooks: true,  
+} );
