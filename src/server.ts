@@ -1,11 +1,10 @@
-import express from "express";
-import { extensions } from "sequelize/types/utils/validator-extras";
+import express, { json } from "express";
 import db from "./database/db";
-import { CategoryModel } from "./database/models/CategoryModels";
-import { ProductModel } from "./database/models/ProductModel";
-import { produto } from "./types/produto";
+import router from "./router"
 
 const app = express();
+app.use( json() );
+app.use( router );
 
 app.listen(3000, async ()=>{
   try{
