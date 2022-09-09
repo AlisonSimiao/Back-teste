@@ -2,7 +2,7 @@ import { DataTypes, Deferrable } from "sequelize";
 import db from "../db";
 import { CategoryModel } from "./CategoryModels";
 
-export const ProductModel = db.define('Produtos',
+export const ProductModel = db.define('produtos',
 {
   id:{
     type: DataTypes.INTEGER,
