@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "../db";
 
-export const CategoryModel = db.define('Categorias',
+export const CategoryModel = db.define('categorias',
 {
   id :{
     type: DataTypes.INTEGER,
@@ -12,10 +12,12 @@ export const CategoryModel = db.define('Categorias',
   codigo:{
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
   titulo:{
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
   },
   status: {
       type: DataTypes.BOOLEAN,
