@@ -1,19 +1,9 @@
 import { Request, Response } from "express";
 const { Op } = require("sequelize");
 import { CategoryModel } from "../database/models/CategoryModels";
-interface cat {
-  titulo: string;
-  codigo : string;
-  status: boolean;
-}
 
 class categories {
   
-  private propertiesDefaults: string[];
-  
-  constructor(){
-    //this.propertiesDefaults = ["titulo", "codigo", "status"];
-  }
   async findAll(req: Request, res: Response){
     
     const allCategories = await CategoryModel.findAll();
