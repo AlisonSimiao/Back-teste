@@ -1,5 +1,6 @@
 import { Router } from "express";
 import categories from "./controllers/categories";
+import products from "./controllers/products";
 
 const router = Router();
 
@@ -11,11 +12,11 @@ router.patch("/categorias/:id", categories.edit) //	- Edita uma Categoria
 router.delete("/categorias/:id",categories.delete)//  - Deleta uma Categoria (deve atualizar o produto setando idCategoria como NULL para produtos que utilizam essa categoria)
 
 /* - Produtos */
-router.get("/produtos")//- Lista todos os Produtos
-router.get("/produtos/:id")//		- Busca um Produto por id
-router.post("/produtos")//- Cria um Produto
-router.patch("/produtos/:id")//- Edita um Produto
-router.delete("/produtos/:id")//- Deleta um Produto (e seu estoque)
+router.get("/produtos", products.findAll)//- Lista todos os Produtos
+router.get("/produtos/:id", products.findOne)//		- Busca um Produto por id
+router.post("/produtos", products.create)//- Cria um Produto
+router.patch("/produtos/:id", products.edit)//- Edita um Produto
+router.delete("/produtos/:id", products.delete)//- Deleta um Produto (e seu estoque)
 
 /* Estoque */
 router.get("/produtos/:id/estoque") // - Lista o estoque para o Produto pelo id
