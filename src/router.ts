@@ -1,13 +1,14 @@
 import { Router } from "express";
+import categories from "./controllers/categories";
 
 const router = Router();
 
 /* Categorias*/
-router.get("categorias")        //  - Lista todas as Categorias
-router.get("/categorias/:id")   // 	- Busca uma Categoria por id
-router.post("/categorias")      // 	- Cria uma Categoria
-router.patch("/categorias/:id") //	- Edita uma Categoria
-router.delete("/categorias/:id")//  - Deleta uma Categoria (deve atualizar o produto setando idCategoria como NULL para produtos que utilizam essa categoria)
+router.get("/categorias", categories.findAll)        //  - Lista todas as Categorias
+router.get("/categorias/:id", categories.findOne)   // 	- Busca uma Categoria por id
+router.post("/categorias", categories.create)      // 	- Cria uma Categoria
+router.patch("/categorias/:id", categories.edit) //	- Edita uma Categoria
+router.delete("/categorias/:id",categories.delete)//  - Deleta uma Categoria (deve atualizar o produto setando idCategoria como NULL para produtos que utilizam essa categoria)
 
 /* - Produtos */
 router.get("/produtos")//- Lista todos os Produtos
