@@ -2,7 +2,7 @@ import { DataTypes, Deferrable } from "sequelize";
 import db from "../db"
 import { ProductModel } from "./ProductModel";
 
-export const StockModel = db.define('Estoque',{
+export const StockModel = db.define('estoque',{
   id:{
     type: DataTypes.INTEGER,
     autoIncrement: true,
