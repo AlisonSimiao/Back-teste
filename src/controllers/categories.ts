@@ -69,6 +69,10 @@ class categories {
 
     try{
       const category = await CategoryModel.findByPk( id );
+
+      if( !category )
+        return res.status(404).json( {message: "IDError> not found category by id"} )
+      
       await category.update( categoryValue );
 
       res.status(200).json( category );
