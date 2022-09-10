@@ -1,6 +1,7 @@
 import { Router } from "express";
 import categories from "./controllers/categories";
 import products from "./controllers/products";
+import Stock from "./controllers/stock";
 
 const router = Router();
 
@@ -19,8 +20,8 @@ router.patch("/produtos/:id", products.edit)//- Edita um Produto
 router.delete("/produtos/:id", products.delete)//- Deleta um Produto (e seu estoque)
 
 /* Estoque */
-router.get("/produtos/:id/estoque") // - Lista o estoque para o Produto pelo id
-router.get("/produtos/:id/estoque") // - Edita o Estoque para o Produto pelo id
-router.get("/produtos/:id/estoque") // - Deve retornar o status [501] - Not Implemented. (não se pode deletar um estoque)
+router.get("/produtos/:id/estoque", Stock.findOne) // - Lista o estoque para o Produto pelo id
+router.patch("/produtos/:id/estoque", Stock.edit) // - Edita o Estoque para o Produto pelo id
+router.delete("/produtos/:id/estoque", Stock.delete) // - Deve retornar o status [501] - Not Implemented. (não se pode deletar um estoque)
 
 export default router;
