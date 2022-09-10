@@ -9,15 +9,6 @@ export const StockModel = db.define('estoque',{
     allowNull: false,
     primaryKey: true,
   },
-  idProduto: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: ProductModel,
-      key: 'id',
-      deferrable: new Deferrable.INITIALLY_IMMEDIATE
-    }
-  },
   quantidade:{
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -32,3 +23,9 @@ export const StockModel = db.define('estoque',{
   },
 }
 );
+
+StockModel.hasOne(ProductModel, {
+  foreignKey: 'idProduto'
+});
+
+ProductModel.belongsTo(StockModel);
