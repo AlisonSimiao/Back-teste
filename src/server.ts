@@ -1,9 +1,5 @@
 import express from "express";
-import { extensions } from "sequelize/types/utils/validator-extras";
 import db from "./database/db";
-import { CategoryModel } from "./database/models/CategoryModels";
-import { ProductModel } from "./database/models/ProductModel";
-import { produto } from "./types/produto";
 
 const app = express();
 
