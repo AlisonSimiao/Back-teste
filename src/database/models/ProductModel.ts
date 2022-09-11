@@ -1,4 +1,4 @@
-import { DataTypes, Deferrable } from "sequelize";
+import { DataTypes } from "sequelize";
 import db from "../db";
 import { CategoryModel } from "./CategoryModels";
 
