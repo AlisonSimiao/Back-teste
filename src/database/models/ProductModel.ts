@@ -31,6 +31,7 @@ export const ProductModel = db.define('produtos',
       defaultValue: true
     },
 });
+
 ProductModel.belongsTo(CategoryModel,{
     constraints: true,
     foreignKey: "idCategoria",
