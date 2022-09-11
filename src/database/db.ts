@@ -5,9 +5,10 @@ const db = new Sequelize(
   process.env.DATABASE_USER,
   process.env.DATABASE_PASS,
   {
-    dialect: 'mysql',
+    dialect: process.env.NODE_ENV === 'test'? 'sqlite' : 'mysql',
+    storage: "./src/__tests__/database/database.test.sqlite",
     port: +process.env.DATABASE_PORT,
-    host: process.env.DATABASE_HOST,
+    ...( process.env.NODE_ENV !== 'test' && {host: process.env.DATABASE_HOST} )
   }
 );
 
