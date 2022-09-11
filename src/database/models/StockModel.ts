@@ -1,8 +1,8 @@
-import { DataTypes, Deferrable } from "sequelize";
+import { DataTypes} from "sequelize";
 import db from "../db"
 import { ProductModel } from "./ProductModel";
 
-export const StockModel = db.define('estoque',{
+export const StockModel = db.define("estoque",{
   id:{
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -19,13 +19,18 @@ export const StockModel = db.define('estoque',{
   },
   status: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+    defaultValue: true,
   },
 }
 );
 
-StockModel.hasOne(ProductModel, {
-  foreignKey: 'idProduto'
+StockModel.belongsTo(ProductModel,{
+  constraints: true,
+  foreignKey: 'idProduto',
+  targetKey: "id",
 });
 
-ProductModel.belongsTo(StockModel);
+ProductModel.hasOne( StockModel,{
+  foreignKey: "idProduto",
+  hooks: true,  
+} );
