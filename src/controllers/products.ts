@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CategoryModel } from "../database/models/CategoryModels";
 import { ProductModel } from "../database/models/ProductModel";
+import { StockModel } from "../database/models/StockModel";
 
 class Product {
   
@@ -27,7 +28,7 @@ class Product {
   }
 
   async create(req: Request, res: Response){
-    console.info("===>", req.body );
+    
     const {
         codigo,
         nome,
@@ -35,6 +36,7 @@ class Product {
         valor,
         idCategoria,
     } = req.body;
+
     const status = req.body.status ?? true;
 
     if( codigo.trim() === "")
@@ -47,7 +49,8 @@ class Product {
       return res.status(400).json({message: "CodError> it is mandatory that the valor is a valid number"});
     if( ! +idCategoria )
       return res.status(400).json({message: "CodError> it is mandatory that the category id is a valid number"});
-    const [category, created] = await ProductModel.findOrCreate({
+    try{
+      const [product, created] = await ProductModel.findOrCreate({
       where:{
         codigo,
         nome,
@@ -61,9 +64,24 @@ class Product {
     })
   
     if( !created )
-      return res.status(400).json({message: "DuplicatedError> category with 'nome' or 'codigo' already exists"});
+      return res.status(400).json({message: "DuplicatedError> product with 'nome' or 'codigo' already exists"});
     
-    return res.status(201).json(category);
+    const stock = await StockModel.create({
+      idProduto: product["id"],
+      quantidade: 0,
+      reserva: 0,
+    })
+
+    if( ! stock ){
+      await product.destroy()
+      return res.status(400).json({message: "StockError> stock create error"});
+    }
+    
+    return res.status(201).json(product);
+  }
+  catch(error){
+    return res.status(201).json(error);
+  }
   }
 
   async edit(req: Request, res: Response){
@@ -103,7 +121,7 @@ class Product {
           break;
       }
         
-      res.status(status).json( {error, message} );
+      res.status(status).json( {message, error} );
     }
 
     
@@ -123,7 +141,11 @@ class Product {
       if( !rows ){
         return res.status(404).json({message : `not found data to erase`})
       }
-
+      await StockModel.destroy({
+        where: {
+          idProduto: null
+        }
+      })
       res.status(200).json({message : `deleted with success`})
     } catch (error) {
       res.status(400).json( error )
