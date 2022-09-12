@@ -13,9 +13,13 @@ describe( "categories",()=>{
       await db.sync({force: true});
     }
   )
+  
+  beforeEach((): void => {
+    jest.setTimeout(60000);
+  });
 
   afterAll(async ()=>{
-    await db.sync({force: true})
+    await db.truncate()
   })
 
   it( 'must not be able create a new category no titulo', async()=>{
@@ -42,10 +46,29 @@ describe( "categories",()=>{
 
   it( 'should be able create a new category', async()=>{
     const response = await request( app ).post("/categorias").send( category )
-
+    
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('id');
   })
 
+  it( 'should be able edit a category', async()=>{
+    const editedCategory = {
+      titulo : "asd",
+      codigo : "asd2",
+    }
+
+    const response = await request( app ).patch("/categorias/1").send(
+      editedCategory
+    )
+
+    expect(response.status).toBe(200);
+  })
+
+  it( 'should be able delete a category', async()=>{
+    const response = await request( app ).delete("/categorias/1")
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('message');
+  })
 
 } )
