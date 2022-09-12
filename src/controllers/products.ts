@@ -37,11 +37,11 @@ class Product {
     } = req.body;
     const status = req.body.status ?? true;
 
-    if( codigo.trim() === "")
+    if( !codigo || codigo.trim() === "")
       return res.status(400).json({message: "CodError> it is mandatory that the codigo is a valid string"});
-    if( nome.trim() === "")
+    if( !nome || nome.trim() === "")
       return res.status(400).json({message: "CodError> it is mandatory that the nome is a valid string"});
-    if( descricao.trim() === "")
+    if( !descricao || descricao.trim() === "")
       return res.status(400).json({message: "CodError> it is mandatory that the desscrição is a valid string"});
     if( ! +valor )
       return res.status(400).json({message: "CodError> it is mandatory that the valor is a valid number"});
@@ -63,7 +63,15 @@ class Product {
     if( !created )
       return res.status(400).json({message: "DuplicatedError> category with 'nome' or 'codigo' already exists"});
     
+<<<<<<< Updated upstream
     return res.status(201).json(category);
+=======
+    return res.status(201).json(product);
+  }
+  catch(error){
+    return res.status(400).json(error);
+  }
+>>>>>>> Stashed changes
   }
 
   async edit(req: Request, res: Response){
