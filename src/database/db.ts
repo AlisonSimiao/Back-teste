@@ -6,7 +6,7 @@ const db = new Sequelize(
   process.env.DATABASE_PASS,
   {
     dialect: process.env.NODE_ENV === 'test'? 'sqlite' : 'mysql',
-    storage: "./src/__tests__/database/database.test.sqlite",
+    storage: "./src/__test__/database/database.test.sqlite",
     port: +process.env.DATABASE_PORT,
     ...( process.env.NODE_ENV !== 'test' && {host: process.env.DATABASE_HOST} )
   }
