@@ -3,14 +3,7 @@ import db from "../database/db";
 import app from "../server";
 
 describe("products", () => {
-  const product = {
-    codigo: "pdt_leite",
-    nome: "leite",
-    descricao: "leite de caixinha",
-    valor: 1000,
-    idCategoria: 1,
-  };
-
+  
   const category = {
     codigo: "codigo",
     titulo: "titulo",
@@ -18,6 +11,10 @@ describe("products", () => {
 
   beforeAll(async () => {
     await db.sync({force: true});
+  });
+
+  beforeEach((): void => {
+    jest.setTimeout(10000);
   });
 
   afterAll(async () => {
@@ -28,12 +25,22 @@ describe("products", () => {
     const categoryResponse = await request(app)
       .post("/categorias")
       .send(category);
+
+      const product = {
+        codigo: "pdt_leite",
+        nome: "leite",
+        descricao: "leite de caixinha",
+        valor: 1000,
+        idCategoria: categoryResponse.body["id"],
+      };
     const response = await request(app).post("/produtos").send(product);
 
+
+    console.log("produto responde ===>>>", response.body )
     expect(categoryResponse.status).toBe(201);
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
-  });
+  }, 60000);
 
   it("should be able edit a product", async () => {
     const editedProduct = {
