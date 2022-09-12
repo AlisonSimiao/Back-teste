@@ -15,7 +15,7 @@ describe( "categories",()=>{
   )
   
   beforeEach((): void => {
-    jest.setTimeout(60000);
+    jest.setTimeout(10000);
   });
 
   afterAll(async ()=>{
@@ -49,7 +49,7 @@ describe( "categories",()=>{
     
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('id');
-  })
+  },60000)
 
   it( 'should be able edit a category', async()=>{
     const editedCategory = {
@@ -71,4 +71,4 @@ describe( "categories",()=>{
     expect(response.body).toHaveProperty('message');
   })
 
-} )
+})
