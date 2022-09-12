@@ -47,7 +47,8 @@ class Product {
       return res.status(400).json({message: "CodError> it is mandatory that the valor is a valid number"});
     if( ! +idCategoria )
       return res.status(400).json({message: "CodError> it is mandatory that the category id is a valid number"});
-    const [category, created] = await ProductModel.findOrCreate({
+    try{
+    const [product, created] = await ProductModel.findOrCreate({
       where:{
         codigo,
         nome,
@@ -63,15 +64,11 @@ class Product {
     if( !created )
       return res.status(400).json({message: "DuplicatedError> category with 'nome' or 'codigo' already exists"});
     
-<<<<<<< Updated upstream
-    return res.status(201).json(category);
-=======
     return res.status(201).json(product);
   }
   catch(error){
     return res.status(400).json(error);
   }
->>>>>>> Stashed changes
   }
 
   async edit(req: Request, res: Response){
