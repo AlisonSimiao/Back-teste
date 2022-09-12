@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-const { Op } = require("sequelize");
 import { CategoryModel } from "../database/models/CategoryModels";
 
 class categories {
@@ -34,9 +33,9 @@ class categories {
     } = req.body;
     const status = req.body.status ?? true;
 
-    if( codigo.trim() === "")
+    if( !codigo || codigo.trim() === "")
       return res.status(400).json({message: "CodError> it is mandatory that the codigo is a valid string"});
-    if( titulo.trim() === "")
+    if( !titulo || titulo.trim() === "")
       return res.status(400).json({message: "CodError> it is mandatory that the titulo is a valid string"});
     
     const [category, created] = await CategoryModel.findOrCreate({
@@ -92,10 +91,10 @@ class categories {
         }
       })
       if( !rows ){
-        return res.status(404).json({Message : `not found data to erase`})
+        return res.status(404).json({message : `not found data to erase`})
       }
 
-      res.status(200).json({Message : `deleted with success`})
+      res.status(200).json({message : `deleted with success`})
     } catch (error) {
       res.status(400).json( error )
     }
