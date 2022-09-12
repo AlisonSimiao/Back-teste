@@ -17,18 +17,20 @@ describe("products", () => {
   };
 
   beforeAll(async () => {
-    await db.sync({force : true});
+    await db.sync({force: true});
   });
 
   afterAll(async () => {
-    await db.truncate({ force: true });
+    await db.sync({force: true});
   });
 
   it("should be able create a new product", async () => {
-    const categoryResponse = await request(app).post("/categorias").send(category);
+    const categoryResponse = await request(app)
+      .post("/categorias")
+      .send(category);
     const response = await request(app).post("/produtos").send(product);
 
-    expect( categoryResponse.status ).toBe(201);
+    expect(categoryResponse.status).toBe(201);
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
   });
@@ -41,7 +43,7 @@ describe("products", () => {
       valor: 1000,
     };
 
-    const response = await await request(app)
+    const response = await request(app)
       .patch("/produtos/1")
       .send(editedProduct);
 
@@ -49,10 +51,7 @@ describe("products", () => {
   });
 
   it("must not be able edit a product", async () => {
-    
-
-    const response = await await request(app)
-      .patch("/produtos/5")
+    const response = await await request(app).patch("/produtos/5");
 
     expect(response.status).toBe(404);
   });
@@ -69,5 +68,4 @@ describe("products", () => {
 
     expect(response.status).toBe(404);
   });
-
 });
