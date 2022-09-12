@@ -48,11 +48,26 @@ describe("products", () => {
     expect(response.status).toBe(200);
   });
 
+  it("must not be able edit a product", async () => {
+    
+
+    const response = await await request(app)
+      .patch("/produtos/5")
+
+    expect(response.status).toBe(404);
+  });
+
   it("should be able delete a product", async () => {
     const response = await request(app).delete("/produtos/1");
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message");
+  });
+
+  it("must not be able delete a product", async () => {
+    const response = await request(app).delete("/produtos/5");
+
+    expect(response.status).toBe(404);
   });
 
 });
